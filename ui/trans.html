@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1.0, user-scalable=no">        <!-- MDUI CSS -->
+        <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/mdui@1.0.1/dist/css/mdui.min.css"
+        integrity="sha384-cLRrMq39HOZdvE0j6yBojO4+1PrHfB7a9l5qLcmRm/fiWXYY+CndJPmyu5FV/9Tw"
+        crossorigin="anonymous"
+        />
+        <link rel="stylesheet" href="./newdesign.css">
+        <!-- MDUI JavaScript -->
+        <script
+        src="https://cdn.jsdelivr.net/npm/mdui@1.0.1/dist/js/mdui.min.js"
+        integrity="sha384-gCMZcshYKOGRX9r6wbDrvF+TcCCswSHFucUzUPwka+Gr+uHgjlYvkABr95TCOz3A"
+        crossorigin="anonymous"
+        ></script>
+
+        <script>
+            function visible(){
+                var thisobj = new Object();
+                thisobj.visibility = document.getElementById('mannual').style.visibility;
+                if (thisobj.visibility == "hidden"){
+                    document.getElementById('mannual').style.visibility = "visible";
+                    document.getElementById('subtitle-finddevices-link').innerText = "点击收回";
+                }else{
+                    document.getElementById('mannual').style.visibility = "hidden";
+                    document.getElementById('subtitle-finddevices-link').innerText = "点击此处";
+                }
+            }
+            function stage1(){
+                document.getElementById('title').innerText = "搜索设备";
+                document.getElementById("stage1").style.visibility = "visible";
+                document.getElementById("stage1").style.display = "block";
+                window.pywebview.api.stage1AutoSearch();
+            }
+            function stage2(){
+                document.getElementById('title').innerText = "连接设备";
+                ShowList("123");
+                showme(2);
+            }
+            function stage3(){
+                showme(3)
+                document.getElementById('title').innerText = "传输数据";
+
+            }
+            function ShowList(json){
+                var test = '{"data":[{"device-ip":"192.168.31.213","device-type":"phone"},{"device-ip":"192.168.31.5","device-type":"laptop"}]}'
+                var jsonobj = JSON.parse(test);
+                var length = jsonobj.data.length;
+                var command = '';
+                for(var i =0 ;length>i;i++){
+                    if(jsonobj.data[i]["device-type"]=="phone"){
+                        var icon = "phone_iphone";
+                    }else{
+                        var icon = "laptop";
+                    }
+                    command+='<li class="mdui-list-item mdui-ripple"><div class="mdui-list-item-content">'+jsonobj.data[i]["device-ip"]+'</div>\
+                        <i class="mdui-list-item-icon mdui-icon material-icons">'+icon+'</i></li>';
+                }
+                command = '<ul class="mdui-list">' + command + '</ul>';
+                var list = document.createElement('list');
+                list.innerHTML = command;
+                document.getElementById('device-list').appendChild(list);
+            }
+            function showme(type){
+                var thisstype = 'stage'+type;
+                var last = type -1;
+                var lasttype = 'stage' + last;
+                document.getElementById(lasttype).style.visibility = "hidden";
+                document.getElementById(lasttype).style.display = "none";
+                document.getElementById(thisstype).style.visibility = "visible";
+                document.getElementById(thisstype).style.display = "block";
+
+            }
+
+        </script>
+    </head>
+    <body class="mdui-theme-layout-dark padding-top mdui-appbar-with-toolbar" onload="stage1();">
+        <div class="mdui-toolbar mdui-appbar mdui-appbar-fixed">
+            <a href="javascript:;" class="mdui-btn mdui-btn-icon"><i class="mdui-icon material-icons">menu</i></a>
+            <span class="mdui-typo-title">ShaoLin</span>
+            <div class="mdui-toolbar-spacer"></div>
+            <a href="javascript:;" class="mdui-btn mdui-btn-icon"><i class="mdui-icon material-icons">search</i></a>
+            <a href="javascript:;" class="mdui-btn mdui-btn-icon"><i class="mdui-icon material-icons">refresh</i></a>
+            <a href="javascript:;" class="mdui-btn mdui-btn-icon mdui-ripple" onclick="window.pywebview.api.destory();"><i class="mdui-icon material-icons" mdui-tooltip="{content: '退出'}">close</i></a>
+        </div>
+
+        <div class="mdui-typo" style="text-align: center;margin:0%;padding: 2%;width: 90%;">
+            <div class="mdui-typo-headline" id="title"></div>
+                <div id="stage1" style="display: none;">
+                    <div style="width: 100%;">
+                        <svg width="300" height="300" xmlns="http://www.w3.org/2000/svg">
+                            <!-- Created with Method Draw - http://github.com/duopixel/Method-Draw/ -->
+                            <g>
+                            <title>background</title>
+                            <rect id="canvas_background" y="-1" x="-1"/>
+                            <g display="none" overflow="visible" y="0" x="0" height="100%" width="100%" id="canvasGrid">
+                            <rect fill="url(#gridpattern)" stroke-width="0" y="0" x="0" height="100%" width="100%"/>
+                            </g>
+                            </g>
+                            <g>
+                            <title>Layer 1</title>
+                            <ellipse ry="150" rx="150" id="svg_4" cy="150.65" cx="149.000003" fill-opacity="null" stroke-opacity="null" stroke-width="1.5" stroke="#000" fill="#fff"/>
+                            <ellipse ry="100" rx="100" id="svg_6" cy="151.650002" cx="151" fill-opacity="null" stroke-opacity="null" stroke-width="1.5" stroke="#000" fill="#fff"/>
+                            <line stroke-linecap="null" stroke-linejoin="null" id="svg_7" y2="459.650002" x2="474.5" y1="59.650002" x1="470.5" fill-opacity="null" stroke-opacity="null" stroke-width="1.5" stroke="#000" fill="none"/>
+                            <line stroke-linecap="null" stroke-linejoin="null" id="svg_8" y2="141.650002" x2="301.500005" y1="147.650002" x1="1.499998" fill-opacity="null" stroke-opacity="null" stroke-width="1.5" stroke="#000" fill="none"/>
+                            <line stroke-linecap="null" stroke-linejoin="null" id="svg_9" y2="42.649994" x2="47.499992" y1="249.650002" x1="265.5" fill-opacity="null" stroke-opacity="null" stroke-width="1.5" stroke="#000" fill="none"/>
+                            <line stroke-linecap="null" stroke-linejoin="null" id="svg_10" y2="46.649997" x2="255.500006" y1="254.650007" x1="42.500007" fill-opacity="null" stroke-opacity="null" stroke-width="1.5" stroke="#000" fill="none"/>
+                            <line stroke-linecap="null" stroke-linejoin="null" id="svg_11" y2="299.649999" x2="160.5" y1="0.649993" x1="150.5" fill-opacity="null" stroke-opacity="null" stroke-width="1.5" stroke="#000" fill="none"/>
+                            <ellipse ry="20" rx="20" id="svg_13" cy="81.149994" cx="83.5" stroke-opacity="null" stroke-width="1.5" stroke="#000" fill="#6b7272"/>
+                            <ellipse ry="20" rx="20" id="svg_14" cy="229.149994" cx="93.5" stroke-opacity="null" stroke-width="1.5" stroke="#000" fill="#6b7272"/>
+                            <ellipse ry="20" rx="20" id="svg_15" cy="112.149994" cx="237.5" stroke-opacity="null" stroke-width="1.5" stroke="#000" fill="#6b7272"/>
+                            </g>
+                        </svg></div>
+                    <div class="mdui-typo-subheading" id="subtitle-status">正在搜索设备...</div>
+                    <div class="mdui-typo-subheading" id="subtitle-finddevices">找不到设备？请<a onclick="visible()" id="subtitle-finddevices-link">点击此处</a></div>
+                    <button class="mdui-btn mdui-btn-raised mdui-ripple mdui-color-pink-900 mdui-center" id="button" style="visibility: hidden;"></button>
+                    <div id="mannual" class="mdui-card mdui-typo mdui-textfield" style="width: 60%;margin: auto;visibility:hidden;padding: 2%;">
+                        <div class="mdui-typo-headline" id="mannual-title">手动添加设备</div>
+                        <input class="mdui-textfield-input" type="text" placeholder="ip地址" id="mannual-ip"/>
+                        <input class="mdui-textfield-input" type="text" placeholder="端口" id="mannual-port"/>
+                        <button class="mdui-btn mdui-btn-raised mdui-ripple mdui-color-pink-900 mdui-center" id="button">尝试连接</button>
+                    </div>
+            </div>
+            <div id="stage2" style="display: none;">
+                <div id="device-list" style="width: 30%;margin: auto;padding: 2%;"></div>
+            </div>
+
+            <div id="stage3" style="display: none;">
+                <div style="width:60%; margin: auto; padding: 3%;">
+                    <div class="mdui-card mdui-shadow-10">
+                        <div class="mdui-typo-subheading" id="transfor-status">还没有传输任何数据</div>
+                    </div>
+
+                    <button class="mdui-btn mdui-btn-raised mdui-ripple mdui-color-deep-purple-900" >发送文件</button>
+                </div>
+            </div>
+        </div>
+
+    </body>
+</html>

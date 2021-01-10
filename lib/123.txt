@@ -1,0 +1,1 @@
+{"data":[{"device-ip":"192.168.31.213","device-type":"phone"},{"device-ip":"192.168.31.5","device-type":"laptop"}]}
