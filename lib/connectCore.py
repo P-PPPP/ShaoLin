@@ -1,4 +1,4 @@
-import socket , requests
+import socket , requests, threading
 from time import ctime
 class network():
     ip = ""
@@ -16,19 +16,24 @@ class network():
             s.close() 
         return ip
 
-    def SocketServer(self):
-        s = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
-        host = self.ip
-        port = 29999
-        s.bind((host,port))
-        s.listen(5)
-        while True:
-            c,addr=s.accept()
-            print("connected from ", addr)
-            message = c.recv(1024).decode()
-            print(message.encode('utf-8'))
-            c.send("yes it is!".encode('utf-8'))
-        return True
+    class server(threading.Thread):
+
+        def run(self):
+            self.SocketServer()
+
+        def SocketServer(self):
+            s = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
+            host = network.ip
+            port = 29999
+            s.bind((host,port))
+            s.listen(5)
+            while True:
+                c,addr=s.accept()
+                print("connected from ", addr)
+                message = c.recv(1024).decode()
+                print(message.encode('utf-8'))
+                c.send("yes it is!".encode('utf-8'))
+            return True
 
     def SocketClient(self,ip):
 
@@ -43,9 +48,18 @@ class network():
         s.close()
 
 class searchPort():
+    class devices():
+        def __init__(self,deviceIp,deviceType):
+            self.ip = deviceIp
+            self.type = deviceType
+
     activeips = []
     import os,sys,socket
     ip = network().ip
+
+    def __init__(self):
+        self.ping_all()
+
     def my_os(self):    
         import platform
         return platform.system()
@@ -70,6 +84,16 @@ class searchPort():
             add = ('.'.join(pre_ip)+'.'+str(i))
             threading._start_new_thread(self.ping_ip,(add,))
             time.sleep(0.1)
+    
+    def list2json(self):
+        import json
+        command = '{"data":['
+        tmp = ""
+        for i in self.activeips:
+            tmp = tmp + str({"device-ip":self.devices(i,"laptop").ip,"device-type":self.devices(i,"laptop").type}) + ","
+        command = command + tmp[::-1].replace(",","",1)[::-1] +"]}"
+        return command.replace("'",'"')
+            
 
 import threading
 class downloader(threading.Thread):
